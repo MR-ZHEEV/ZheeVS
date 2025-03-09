@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akses Kamera di WebView iOS</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        video {
+            width: 100%;
+            max-width: 600px;
+            border: 2px solid black;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Akses Kamera di WebView iOS</h2>
+    <button onclick="startCamera()">Buka Kamera</button>
+    <video id="video" autoplay playsinline></video>
+
+    <script>
+        async function startCamera() {
+            const constraints = {
+                video: {
+                    facingMode: "user", // "environment" untuk kamera belakang
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                },
+                audio: false
+            };
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia(constraints);
+                document.getElementById('video').srcObject = stream;
+            } catch (error) {
+                alert("Gagal mengakses kamera: " + error.message);
+                console.error("Error:", error);
+            }
+        }
+    </script>
+
+</body>
+</html>
